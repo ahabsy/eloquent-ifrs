@@ -56,9 +56,9 @@ class CreateIfrsRecycledObjectsTable extends Migration
 
                 // before we set the datatype of this field, we check the existing user's table's id columns datatype
                 $type = Schema::getColumnType($usersTable,'id');
-                if ($type === 'integer') {
-                    $table->unsignedInteger('user_id');
-                } elseif ($type === 'string') {
+                    if ($type === 'integer') {
+                $table->unsignedInteger('user_id');
+                } elseif (in_array($type, ['string', 'char', 'uuid'])) {
                     $table->uuid('user_id');
                 } else {
                     $table->unsignedBigInteger('user_id');
@@ -71,7 +71,7 @@ class CreateIfrsRecycledObjectsTable extends Migration
                 // attributes
                 if ($type === 'integer') {
                     $table->unsignedInteger('recyclable_id');
-                } elseif ($type === 'string') {
+                } elseif (in_array($type, ['string', 'char', 'uuid'])) {
                     $table->uuid('recyclable_id');
                 } else {
                     $table->bigInteger('recyclable_id');
